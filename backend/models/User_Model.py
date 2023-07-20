@@ -7,5 +7,3 @@ class User:
         self.role = role
         self.payment=  payment
     
-    def is_valid(self):
-        return bool(self.username and self.email and self.password)
