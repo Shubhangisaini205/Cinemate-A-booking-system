@@ -1,14 +1,19 @@
-from flask import Flask,request,jsonify
+from flask import Flask, request, jsonify
 from flask_cors import CORS
-from routes.UserRoutes import users_bp
-import os
-PORT = os.getenv("PORT")
+from routes.UserRoutes import user_bp
+from config.app_config import create_db_connection
+
+
+
 app = Flask(__name__)
+
 CORS(app, origins='*')
 
-app.register_blueprint(users_bp, url_prefix="/users")
+db = create_db_connection(app)
 
-@app.route("/",methods=["GET"])
+app.register_blueprint(user_bp, url_prefix="/users")
+
+@app.route("/", methods=["GET"])
 def Home():
     return jsonify(
         {
@@ -18,4 +23,4 @@ def Home():
 
 
 if __name__ == '__main__':
-    app.run(debug=True,port=PORT)
+    app.run(debug=True,port=8080)

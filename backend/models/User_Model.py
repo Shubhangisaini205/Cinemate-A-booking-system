@@ -1,9 +1,22 @@
-# models/user.py
-class User:
-    def __init__(self, username, email, password,role,payment):
-        self.username = username
-        self.email = email
-        self.password = password
-        self.role = role
-        self.payment=  payment
+
+
+
+
+from mongoengine import (
+    Document,
+    StringField,
+    IntField,
+    BooleanField,
+    ReferenceField,
+    ListField,
+   
+)
+
+class users(Document):
+    username = StringField(required=True)
+    email = StringField(required=True)
+    password = StringField(required=True)
+    payment = IntField()
+    role = StringField(required=True)
+
     
