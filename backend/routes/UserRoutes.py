@@ -30,6 +30,7 @@ def get_Single_users(_id):
         return "Error: Database connection failed"
 
 
+
 # Create a new user
 @user_bp.route("/register", methods=["POST"])
 def register_user():
@@ -107,6 +108,8 @@ def login_user():
         return jsonify({"message": "Incorrect password"}), 400
 
 
+
+# update plan subscription of user
 @user_bp.route("/update/<ObjectId:_id>", methods=["PATCH"])
 def update_Single_users(_id):
     data = request.get_json()

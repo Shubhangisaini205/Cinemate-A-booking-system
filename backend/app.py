@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from routes.UserRoutes import user_bp
+from routes.MovieRoutes import movie_bp
+from routes.MovieShowsRoutes import movie_show_bp
 from config.app_config import create_db_connection
 
 
@@ -12,6 +14,8 @@ CORS(app, origins='*')
 db = create_db_connection(app)
 
 app.register_blueprint(user_bp, url_prefix="/users")
+app.register_blueprint(movie_bp, url_prefix="/movies")
+app.register_blueprint(movie_show_bp, url_prefix="/movie_show")
 
 @app.route("/", methods=["GET"])
 def Home():
