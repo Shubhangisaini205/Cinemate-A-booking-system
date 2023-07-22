@@ -6,12 +6,61 @@ movie_bp = Blueprint('movie_bp', __name__)
 
 # Route to get all movies
 @movie_bp.route("/", methods=["GET"])
+
+    # try:
+    #     # movies = Movies.objects().exclude("shows").to_json()  # Exclude the 'shows' field to avoid large response
+    #     movies = Movies.objects().to_json()  
+
+    #     return movies, 200
+    # except Exception as e:
+    #     return jsonify({"message": "Error fetching movies", "error": str(e)}), 500
+
 def get_all_movies():
     try:
-        # movies = Movies.objects().exclude("shows").to_json()  # Exclude the 'shows' field to avoid large response
-        movies = Movies.objects().to_json()  
+        # Retrieve all the movies from the database
+        movies = Movies.objects()
 
-        return movies, 200
+        # Convert the movies to a list of dictionaries
+        movie_data_list = []
+        for movie in movies:
+            shows_data = []
+
+            # Fetch the detailed information of each show using the show_id
+            for show in movie.shows:
+                show_data = {
+                    "show_id": str(show.id),
+                    "show_name":show.show_name,
+                    "date": show.date,
+                    "start_times": show.start_time,
+                    "end_times": show.end_time,
+                    "total_seats": show.total_seats,
+                    "price": show.price
+                }
+                shows_data.append(show_data)
+
+            # Convert the reviews array to a list of dictionaries
+            reviews_data = []
+            for review in movie.reviews:
+                review_data = {
+                    "rating": review.rating,
+                    "comment": review.comment
+                }
+                reviews_data.append(review_data)
+
+            # Create the movie dictionary with all the data
+            movie_data = {
+                "movie_id": str(movie.id),  # Convert ObjectId to string
+                "movie_name": movie.movie_name,
+                "language": movie.language,
+                "movie_desc": movie.movie_desc,
+                "image_url": movie.image_url,
+                "length": movie.length,
+                "shows": shows_data,
+                "reviews": reviews_data
+            }
+            movie_data_list.append(movie_data)
+
+        return jsonify(movie_data_list), 200
     except Exception as e:
         return jsonify({"message": "Error fetching movies", "error": str(e)}), 500
 
@@ -19,10 +68,52 @@ def get_all_movies():
 @movie_bp.route("/<ObjectId:_id>", methods=["GET"])
 def get_Single_Movie(_id):
     try:
-        movie = Movies.objects.with_id(_id).to_json()
-        return movie
+        # Retrieve the movie with the specified ObjectId
+        movie = Movies.objects.with_id(_id)
+
+        if movie:
+            shows_data = []
+
+            # Fetch the detailed information of each show using the show_id
+            for show in movie.shows:
+                show_data = {
+                    "show_id": str(show.id),
+                    "show_name": show.show_name,
+                    "date": show.date,
+                    "start_times": show.start_time,
+                    "end_times": show.end_time,
+                    "total_seats": show.total_seats,
+                    "price": show.price
+                }
+                shows_data.append(show_data)
+
+            # Convert the reviews array to a list of dictionaries
+            reviews_data = []
+            for review in movie.reviews:
+                review_data = {
+                    "rating": review.rating,
+                    "comment": review.comment
+                }
+                reviews_data.append(review_data)
+
+            # Create the movie dictionary with all the data
+            movie_data = {
+                "movie_id": str(movie.id),  # Convert ObjectId to string
+                "movie_name": movie.movie_name,
+                "language": movie.language,
+                "movie_desc": movie.movie_desc,
+                "image_url": movie.image_url,
+                "length": movie.length,
+                "shows": shows_data,
+                "reviews": reviews_data
+            }
+
+            return jsonify(movie_data), 200
+        else:
+            return jsonify({"message": "Movie not found"}), 404
+
     except Exception as e:
-        return "Error: Database connection failed"
+        return jsonify({"message": "Error fetching movie", "error": str(e)}), 500
 
 
 #  adding a movie

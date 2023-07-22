@@ -84,7 +84,7 @@ def add_movie_show():
 
     # Create a new movie show instance
     new_show = Movie_Show(
-         show_name=show_name,
+        show_name=show_name,
         date=date,
         start_time=start_times,
         end_time=end_times,
