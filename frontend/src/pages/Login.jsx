@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Flex, FormControl, FormLabel, Input, Button, Heading, Link } from "@chakra-ui/react";
-import { jewel, rose, secondaryColor } from "../constants/color";
+import { mainColor,  } from "../constants/color";
 import { LoginAction } from "../redux/AuthReducer/action";
 import {useNavigate} from "react-router-dom" 
 const Login = () => {
@@ -34,16 +34,16 @@ const Login = () => {
                 bg="white"
                 boxShadow="md"
             >
-                <Heading textAlign="center" color={jewel} mb={6}>
+                <Heading textAlign="center" color={mainColor} mb={6}>
                     Welcome to CineMate
                 </Heading>
-                <Heading textAlign="center" color={jewel} mb={6}>
+                <Heading textAlign="center" color={mainColor} mb={6}>
                     Login
                 </Heading>
 
                 <form onSubmit={handleLogin}>
                     <FormControl mb={4}>
-                        <FormLabel color={jewel} htmlFor="email">
+                        <FormLabel color={mainColor} htmlFor="email">
                             Email address
                         </FormLabel>
                         <Input
@@ -52,13 +52,13 @@ const Login = () => {
                             value={email}
                             placeholder="Enter your email"
                             onChange={(e) => setEmail(e.target.value)}
-                            borderColor={jewel}
-                            _focus={{ borderColor: jewel }}
+                            borderColor={mainColor}
+                            _focus={{ borderColor: mainColor }}
                         />
                     </FormControl>
 
                     <FormControl mb={4}>
-                        <FormLabel color={jewel} htmlFor="password">
+                        <FormLabel color={mainColor} htmlFor="password">
                             Password
                         </FormLabel>
                         <Input
@@ -67,14 +67,14 @@ const Login = () => {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="Enter your password"
-                            borderColor={jewel}
-                            _focus={{ borderColor: jewel }}
+                            borderColor={mainColor}
+                            _focus={{ borderColor: mainColor }}
                         />
                     </FormControl>
 
                     <Button
                         type="submit"
-                        bg={jewel}
+                        bg={mainColor}
                         color="white"
                         fontWeight="bold"
                         w="100%"
@@ -82,7 +82,7 @@ const Login = () => {
                     >
                         Login
                     </Button>
-                    <Link color={jewel} textAlign="center" mb={4} href="/signup">
+                    <Link color={mainColor} textAlign="center" mb={4} href="/signup">
                         Don't have an account? Signup here.
                     </Link>
                 </form>

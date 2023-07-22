@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Flex, FormControl, FormLabel, Input, Button, Heading, Link } from "@chakra-ui/react";
-import { jewel } from "../constants/color";
+import { mainColor} from "../constants/color";
 import { useDispatch } from "react-redux";
 import { SignupAction } from "../redux/AuthReducer/action";
 const Signup = () => {
@@ -44,16 +44,16 @@ const Signup = () => {
                 bg="white"
                 boxShadow="md"
             >
-                <Heading textAlign="center" color={jewel} mb={6}>
+                <Heading textAlign="center" color={mainColor} mb={6}>
                     Welcome to CineMate
                 </Heading>
-                <Heading textAlign="center" color={jewel} mb={6}>
+                <Heading textAlign="center" color={mainColor} mb={6}>
                     Create an Account
                 </Heading>
 
                 <form onSubmit={handleSubmit}>
                     <FormControl mb={4}>
-                        <FormLabel color={jewel} htmlFor="username">
+                        <FormLabel color={mainColor} htmlFor="username">
                             Username
                         </FormLabel>
                         <Input
@@ -63,13 +63,13 @@ const Signup = () => {
                             value={formData.username}
                             onChange={handleChange}
                             placeholder="Enter your username"
-                            borderColor={jewel}
-                            _focus={{ borderColor: jewel }}
+                            borderColor={mainColor}
+                            _focus={{ borderColor: mainColor}}
                         />
                     </FormControl>
 
                     <FormControl mb={4}>
-                        <FormLabel color={jewel} htmlFor="email">
+                        <FormLabel color={mainColor} htmlFor="email">
                             Email address
                         </FormLabel>
                         <Input
@@ -79,13 +79,13 @@ const Signup = () => {
                             value={formData.email}
                             onChange={handleChange}
                             placeholder="Enter your email"
-                            borderColor={jewel}
-                            _focus={{ borderColor: jewel }}
+                            borderColor={mainColor}
+                            _focus={{ borderColor: mainColor}}
                         />
                     </FormControl>
 
                     <FormControl mb={4}>
-                        <FormLabel color={jewel} htmlFor="password">
+                        <FormLabel color={mainColor} htmlFor="password">
                             Password
                         </FormLabel>
                         <Input
@@ -95,13 +95,13 @@ const Signup = () => {
                             value={formData.password}
                             onChange={handleChange}
                             placeholder="Enter your password"
-                            borderColor={jewel}
-                            _focus={{ borderColor: jewel }}
+                            borderColor={mainColor}
+                            _focus={{ borderColor: mainColor}}
                         />
                     </FormControl>
 
                     <FormControl mb={4}>
-                        <FormLabel color={jewel} htmlFor="confirmPassword">
+                        <FormLabel color={mainColor} htmlFor="confirmPassword">
                             Confirm Password
                         </FormLabel>
                         <Input
@@ -111,23 +111,23 @@ const Signup = () => {
                             value={formData.confirmPassword}
                             onChange={handleChange}
                             placeholder="Confirm your password"
-                            borderColor={jewel}
-                            _focus={{ borderColor: jewel }}
+                            borderColor={mainColor}
+                            _focus={{ borderColor: mainColor}}
                         />
                     </FormControl>
 
                     {/* Add a Login link */}
-                    <Link color={jewel} textAlign="center" mb={4} href="/login">
+                    <Link color={mainColor} textAlign="center" mb={4} href="/login">
                         Already have an account? Login here.
                     </Link>
 
                     <Button
                         type="submit"
-                        bg={jewel}
+                        bg={mainColor}
                         color="white"
                         fontWeight="bold"
                         w="100%"
-                        _hover={{ bg: "#87234D" }}
+                        _hover={{ bg: "#23875f" }}
                     >
                         Signup
                     </Button>

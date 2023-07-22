@@ -21,12 +21,12 @@ import {
   Popover,
   useToast
 } from "@chakra-ui/react";
-import { primaryColor, jewel, rose, secondaryColor } from "../constants/color";
+import { navbar, colorShade4 } from "../constants/color";
 import { Link, useNavigate } from "react-router-dom";
 import { TiThMenu } from "react-icons/ti";
 import { BsPerson } from "react-icons/bs"
 import RoleModal from "./RoleModal";
-
+import cinamateName from "../assests/cinemate-name.png"
 
 const NavBar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -35,15 +35,15 @@ const NavBar = () => {
   let token = localStorage.getItem("token")
   let loggeduser = JSON.parse(localStorage.getItem("user"))
   return (
-    <Box bg={primaryColor} px={4} py={4}>
+    <Box bgGradient={navbar} px={4} py={4}>
       <Flex justifyContent="space-between" >
         <Flex alignItems="center">
-          <Box as="span" color={jewel} fontWeight="bold">
-            MyApp
+          <Box as="span" color={colorShade4} fontWeight="bold">
+          <Image src={cinamateName} width={"100px"}/>
           </Box>
-          <Box border="1px solid black" ml={4} maxW="100px" maxH="60px">
+          {/* <Box border="1px solid black" ml={4} maxW="100px" maxH="60px">
             ❤️
-          </Box>
+          </Box> */}
         </Flex>
 
         {/* Hamburger Menu */}
@@ -54,6 +54,7 @@ const NavBar = () => {
             variant="ghost"
             size="md"
             aria-label="Open Navigation"
+
           />
         </Box>
 
@@ -61,6 +62,11 @@ const NavBar = () => {
           <Link to="/">
             <Text color="white" fontWeight="bold">
               Home
+            </Text>
+          </Link>
+          <Link to="/movies">
+            <Text color="white" fontWeight="bold">
+              Movies
             </Text>
           </Link>
           {token ?
@@ -75,7 +81,7 @@ const NavBar = () => {
                     <MenuItem color="pink.400">
                       Hey,{token ? `${loggeduser.username}` : "User"}
                     </MenuItem>
-                    <MenuItem><RoleModal id={loggeduser.userId}/></MenuItem>
+                    <MenuItem><RoleModal id={loggeduser.userId} /></MenuItem>
                     <MenuItem>Order History</MenuItem>
                     <MenuItem>My Address</MenuItem>
                     <MenuItem>Reviews</MenuItem>
@@ -87,7 +93,7 @@ const NavBar = () => {
                   </MenuGroup>
                   <MenuItem
                     _hover={{ bg: "#87234D" }}
-                    backgroundColor={jewel}
+                    backgroundColor={navbar}
                     color={"white"}
                     onClick={() => {
                       // dispatch(logout);
@@ -127,6 +133,11 @@ const NavBar = () => {
               <Flex direction="column" gap={3}>
                 <Link to="/" onClick={onClose}>
                   <Text fontWeight="bold">Home</Text>
+                </Link>
+                <Link to="/movies">
+                  <Text  fontWeight="bold">
+                    Movies
+                  </Text>
                 </Link>
                 {token ? "" :
                   <Link to="/login" onClick={onClose}>
