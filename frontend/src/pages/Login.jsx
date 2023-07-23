@@ -1,15 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Box, Flex, FormControl, FormLabel, Input, Button, Heading, Link } from "@chakra-ui/react";
-import { mainColor,  } from "../constants/color";
+import { Box, Flex, FormControl, FormLabel, Input, Button, Heading, Link, useToast } from "@chakra-ui/react";
+import { mainColor } from "../constants/color";
 import { LoginAction } from "../redux/AuthReducer/action";
-import {useNavigate} from "react-router-dom" 
+import { useNavigate } from "react-router-dom";
+
 const Login = () => {
     const dispatch = useDispatch();
-    const { isLoading, isAuth, token, loggedUser, } = useSelector((state) => state.AuthReducer);
+    const toast = useToast();
+    const { isLoading, isAuth, token, loggedUser } = useSelector((state) => state.AuthReducer);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+    
+    useEffect(() => {
+        document.title = `Cinemate - Login `;
+        // Clean up the title when the component unmounts
+        return () => {
+            document.title = 'Cinemate';
+        };
+    }, []);
+
     const handleLogin = (e) => {
         e.preventDefault();
         // Dispatch the login action with the user's email and password
@@ -19,21 +30,25 @@ const Login = () => {
     if (token) {
         localStorage.setItem("token", token); // Save token in local storage
         localStorage.setItem("user", JSON.stringify(loggedUser));
-        ; // Redirect to the home page
-        setTimeout(()=>{
-            navigate("/")
-        },1000)
-       
+        // Redirect to the home page
+        setTimeout(() => {
+            navigate("/");
+        }, 1000);
+
+        // Show success toast when login is successful
+        toast({
+            position: "top",
+            title: "Login Successful",
+            description: "You have successfully logged in!",
+            status: "success",
+            duration: 3000, // Duration for which the toast will be shown (in milliseconds)
+            isClosable: true,
+        });
     }
 
     return (
-        <Flex align="center" justify="center" minH="80vh" >
-            <Box
-                p={10}
-                borderRadius="md"
-                bg="white"
-                boxShadow="md"
-            >
+        <Flex align="center" justify="center" minH="80vh">
+            <Box p={10} borderRadius="md" bg="white" boxShadow="md">
                 <Heading textAlign="center" color={mainColor} mb={6}>
                     Welcome to CineMate
                 </Heading>

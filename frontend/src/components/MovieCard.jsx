@@ -5,14 +5,22 @@ import {
     Stack,
     Flex,
     Image,
-    Button
+    Button,
+    HStack,
+    useToast
 } from "@chakra-ui/react";
 import { StarIcon } from "@chakra-ui/icons";
 import { Link } from "react-router-dom";
 import { mainColor, navbar, orange } from "../constants/color";
-
+import { DeleteIcon, EditIcon, AddIcon } from '@chakra-ui/icons';
+import AddMovieModal from "./Admin/AddMovieModal";
+import { useDispatch } from "react-redux";
+import { deleteMovieAction, getMoviesAction } from "../redux/MovieReducer/action";
 const MovieCard = ({ movie }) => {
-    const { movie_name, movie_desc, image_url, shows, length, language, reviews,movie_id } = movie;
+    let loggeduser = JSON.parse(localStorage.getItem("user"))
+    const toast = useToast();
+    const dispatch = useDispatch()
+    const { movie_name, movie_desc, image_url, shows, length, language, reviews, movie_id } = movie;
 
     // Calculate average rating
     const calculateAverageRating = () => {
@@ -29,6 +37,28 @@ const MovieCard = ({ movie }) => {
 
     const handleMouseLeave = () => {
         setIsHovered(false);
+    };
+    const handleDeleteMovie = () => {
+        dispatch(deleteMovieAction(movie_id))
+            .then(() => {
+                dispatch(getMoviesAction());
+                toast({
+                    title: "Movie Deleted",
+                    description: "The movie has been successfully deleted.",
+                    status: "success",
+                    duration: 3000,
+                    isClosable: true,
+                });
+            })
+            .catch((error) => {
+                toast({
+                    title: "Error",
+                    description: "An error occurred while deleting the movie.",
+                    status: "error",
+                    duration: 3000,
+                    isClosable: true,
+                });
+            });
     };
 
     return (
@@ -95,12 +125,24 @@ const MovieCard = ({ movie }) => {
                     as={Link}
                     to={`/movies/${movie_id}`}
                     bottom={4}
-                   bgGradient={navbar}
-                   _hover={{bg:orange}}
+                    bgGradient={navbar}
+                    _hover={{ bg: orange }}
                 >
                     Book
                 </Button>
+                <Flex>
+                    {loggeduser?.userId=="64bd4a12958b0473ab897e92"?
+                    <HStack spacing={2}>
+                        <Button
+                            colorScheme="red"
+                            leftIcon={<DeleteIcon />}
+                        onClick={handleDeleteMovie }
+                        ></Button>
+                    </HStack>:""}
+                </Flex>
             </Stack>
+            {loggeduser?.userId=="64bd4a12958b0473ab897e92"?
+           <AddMovieModal/>:""}
         </Box>
     );
 };

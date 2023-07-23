@@ -35,15 +35,12 @@ const NavBar = () => {
   let token = localStorage.getItem("token")
   let loggeduser = JSON.parse(localStorage.getItem("user"))
   return (
-    <Box bgGradient={navbar} px={4} py={4}>
+    <Box bgGradient={navbar} px={4} py={4} position="fixed" top={0} left={0} right={0} zIndex={10}>
       <Flex justifyContent="space-between" >
         <Flex alignItems="center">
           <Box as="span" color={colorShade4} fontWeight="bold">
-          <Image src={cinamateName} width={"100px"}/>
+            <Image src={cinamateName} width={"100px"} />
           </Box>
-          {/* <Box border="1px solid black" ml={4} maxW="100px" maxH="60px">
-            ❤️
-          </Box> */}
         </Flex>
 
         {/* Hamburger Menu */}
@@ -82,18 +79,18 @@ const NavBar = () => {
                       Hey,{token ? `${loggeduser.username}` : "User"}
                     </MenuItem>
                     <MenuItem><RoleModal id={loggeduser.userId} /></MenuItem>
-                    <MenuItem>Order History</MenuItem>
-                    <MenuItem>My Address</MenuItem>
+                    <MenuItem onClick={() => navigate("/userBookings")}>Your Bookings</MenuItem>
+                    {/* <MenuItem>My Address</MenuItem> */}
                     <MenuItem>Reviews</MenuItem>
                     <MenuItem
                     // onClick={() => navigate("/adminLogin")}
                     >
-                      Admin
+                      Profile
                     </MenuItem>
                   </MenuGroup>
                   <MenuItem
                     _hover={{ bg: "#87234D" }}
-                    backgroundColor={navbar}
+                    bgGradient={navbar}
                     color={"white"}
                     onClick={() => {
                       // dispatch(logout);
@@ -135,7 +132,7 @@ const NavBar = () => {
                   <Text fontWeight="bold">Home</Text>
                 </Link>
                 <Link to="/movies">
-                  <Text  fontWeight="bold">
+                  <Text fontWeight="bold">
                     Movies
                   </Text>
                 </Link>

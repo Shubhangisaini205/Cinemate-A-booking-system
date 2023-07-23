@@ -101,7 +101,7 @@ function RoleModal({ id }) {
             </Button> */}
             
             <PaymentModal selectedplan={selectedPlan.role} currentplan={singleUser.role} id={id} price={selectedPlan.payment} />
-            <Button onClick={onClose} variant='ghost'>
+            <Button  onClick={onClose} variant='ghost'>
               Close
             </Button>
           </ModalFooter>

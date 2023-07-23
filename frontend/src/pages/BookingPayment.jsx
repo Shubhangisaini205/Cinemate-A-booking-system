@@ -1,19 +1,21 @@
-import { Text, Input, Flex, Button, AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, useDisclosure, useToast } from '@chakra-ui/react';
+import { Text, Input, Flex, Button, AlertDialog, AlertDialogBody, AlertDialogFooter, AlertDialogHeader, AlertDialogContent, AlertDialogOverlay, useDisclosure, useToast, Box } from '@chakra-ui/react';
 import React, { useState, useEffect } from 'react';
 import Cards from 'react-credit-cards-2';
 import 'react-credit-cards-2/dist/es/styles-compiled.css';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { SingleUserAction, UpdateAction } from '../redux/AuthReducer/action';
+import { addMovieShowBooking } from '../redux/MovieReducer/action';
 import { navbar } from '../constants/color';
+ 
 
-const CreditCard = ({ price, onClosePaymentModal, id }) => {
-    const loggeduser = JSON.parse(localStorage.getItem("user"))
+const BookingPayment = ({ show_id, booked_seats, total_price }) => {
+    let loggeduser = JSON.parse(localStorage.getItem('user'));
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const [state, setState] = useState({
         number: '2348797557896573',
-        expiry: '12/207',
+        expiry: '12/27',
         cvc: '',
         name: loggeduser.username,
         focus: '',
@@ -22,6 +24,10 @@ const CreditCard = ({ price, onClosePaymentModal, id }) => {
     const [otp, setotp] = useState("")
     const { isOpen, onOpen, onClose } = useDisclosure();
     const toast = useToast();
+
+
+    const bookingObj = { show_id, "user_id": loggeduser.userId, booked_seats, total_price:Math.floor(+total_price) }
+    console.log(bookingObj,"bookingObj")
 
     const handleInputChange = (evt) => {
         const { name, value } = evt.target;
@@ -89,17 +95,17 @@ const CreditCard = ({ price, onClosePaymentModal, id }) => {
             });
         } else {
             onClose();
-            dispatch(UpdateAction(id, price)).then(() => dispatch(SingleUserAction(id)));
+            dispatch(addMovieShowBooking(bookingObj));
             toast({
-                title: 'Payment Successful',
-                description: `₹ ${price} paid successfully!`,
+                position: 'top',
+                title: 'Booking  Successful',
+                description: `₹ ${total_price} paid successfully!`,
                 status: 'success',
-                duration: 5000,
+                duration: 4000,
                 isClosable: true,
             });
             setotp("")
             onClose()
-            onClosePaymentModal();
             setTimeout(() => {
                 navigate("/")
             }, 3000)
@@ -108,7 +114,7 @@ const CreditCard = ({ price, onClosePaymentModal, id }) => {
     };
 
     return (
-        <div>
+        <Box>
             <Cards
                 number={state.number}
                 expiry={state.expiry}
@@ -118,7 +124,7 @@ const CreditCard = ({ price, onClosePaymentModal, id }) => {
             />
             <form>
                 <Input
-                    mt={2}
+                    mt={10}
                     type="tel"
                     name="number"
                     placeholder="Card Number"
@@ -163,14 +169,8 @@ const CreditCard = ({ price, onClosePaymentModal, id }) => {
                     mb={2}
                     size="lg"
                 />
-                <Button
-                    mt={4}
-                    bgGradient={navbar}
-                    _hover={{ bgGradient: navbar }}
-                    onClick={generateOTP}
-                    isDisabled={!isFormValid()}
-                >
-                    Pay ₹{price}
+                <Button mt={4} bgGradient={navbar} _hover={{bgGradient:navbar}} onClick={generateOTP}  isDisabled={!isFormValid()}>
+                    Pay ₹{total_price}
                 </Button>
                 <AlertDialog isOpen={isOpen} onClose={onClose}>
                     <AlertDialogOverlay />
@@ -186,8 +186,8 @@ const CreditCard = ({ price, onClosePaymentModal, id }) => {
                             />
                         </AlertDialogBody>
                         <AlertDialogFooter>
-                            <Button bgGradient={navbar}
-                                _hover={{ bgGradient: navbar }} onClick={handlePay}>
+                            <Button bgGradient={navbar} 
+                            _hover={{bgGradient:navbar}} onClick={handlePay}>
                                 Confirm Payment
                             </Button>
                             <Button ml={4} onClick={() => {
@@ -200,8 +200,8 @@ const CreditCard = ({ price, onClosePaymentModal, id }) => {
                     </AlertDialogContent>
                 </AlertDialog>
             </form>
-        </div>
+        </Box>
     );
 };
 
-export default CreditCard;
+export default BookingPayment;

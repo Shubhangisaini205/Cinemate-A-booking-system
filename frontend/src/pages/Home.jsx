@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MoviesList from './MoviesList';
 import Slider from 'react-slick';
 import { Box, Heading, Text, IconButton, Flex, useMediaQuery } from '@chakra-ui/react';
@@ -57,19 +57,71 @@ let moviesSliderData = [
   }
 
 ]
+
+let CommingSoonData = [
+  {
+    image: "https://originserver-static1-uat.pvrcinemas.com/newweb/movies/thumb/374x226/HO00020603.jpg?v=8",
+
+    name: "Haunted Mansion"
+  },
+  {
+    image: "https://originserver-static1-uat.pvrcinemas.com/newweb/movies/thumb/374x226/HO00022697.jpg?v=8",
+
+    name: "Psycho-pass Providence"
+  },
+
+  {
+    image: "https://originserver-static1-uat.pvrcinemas.com/newweb/movies/thumb/374x226/HO00023271.jpg?v=8",
+
+    name: "BRO"
+  },
+  {
+    image: "https://originserver-static1-uat.pvrcinemas.com/newweb/movies/thumb/374x226/HO00023679.jpg?v=8",
+
+    name: "Shaatr"
+  },
+  {
+    image: "https://originserver-static1-uat.pvrcinemas.com/newweb/movies/thumb/374x226/HO00024831.jpg?v=8",
+
+    name: "The Childe"
+  },
+  {
+    image: "https://originserver-static1-uat.pvrcinemas.com/newweb/movies/thumb/374x226/HO00018732.jpg?v=8",
+
+    name: "GADAR 2"
+  },
+  {
+    image: "https://originserver-static1-uat.pvrcinemas.com/newweb/movies/thumb/374x226/HO00023633.jpg?v=8",
+
+
+    name: "OMG 2"
+  },
+  {
+    image: "https://originserver-static1-uat.pvrcinemas.com/newweb/movies/thumb/374x226/HO00021364.jpg?v=8",
+
+    name: "Blue Beetle"
+  },
+  {
+    image: "https://originserver-static1-uat.pvrcinemas.com/newweb/movies/thumb/374x226/HO00022311.jpg?v=8",
+    name: "Junior",
+  }
+
+]
 function Home() {
 
+  useEffect(() => {
+    document.title = 'Cinemate - Unleash Your Movie Journey';
+    // Clean up the title when the component unmounts
+    return () => {
+        document.title = 'Cinemate';
+    };
+}, []);
   return (
-    <Box border={"1px solid black"}>
+    <Box border={"1px solid black"}  mt={20}>
       <Box mt={10}>
       <HomeSlider />
       </Box>
-      
-    
       <HeroComp />
-
-
-
       <Box
         width={{ base: "90%", sm: "90%", md: "90%", lg: "85%" }}
         margin="auto"
@@ -104,9 +156,9 @@ function Home() {
           marginTop={{ base: 2, sm: 3, md: 7, lg: 10 }}
           borderBottomColor={mainColor}
         >
-          Popular Events
+          Coming Soon
         </Text>
-        <SliderComp data={moviesSliderData} />
+        <SliderComp data={CommingSoonData} />
       </Box>
 
     </Box>

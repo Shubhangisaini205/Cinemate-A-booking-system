@@ -8,7 +8,7 @@ export const SignupAction = (userObj) => (dispatch) => {
       .then((res) => {
         if (res.status === 201) {
           
-          alert(res.data.message);
+          // alert(res.data.message);
           dispatch({ type: SIGNUP_SUCCESS });
         } else if (res.status === 400) {
           alert("Please fill all the required fields.");
@@ -33,7 +33,7 @@ export const SignupAction = (userObj) => (dispatch) => {
       .then((res) => {
         if (res.status === 200) {
           // console.log(res.data)
-          alert(res.data.message);
+          // alert(res.data.message);
           dispatch({ type: SIGNIN_SUCCESS, payload: res.data });
         } else {
           alert(res.data.message);

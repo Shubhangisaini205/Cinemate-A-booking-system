@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { DELETE_MOVIE, GET_MOVIES, MOVIES_FAILURE, MOVIES_REQUEST, SINGLE_MOVIE, UPDATE_MOVIE } from './actiontype';
+import { ADD_MOVIE_SHOW, ADD_MOVIE_SHOW_BOOKING, DELETE_MOVIE, DELETE_MOVIE_SHOW, GET_MOVIES, GET_MOVIE_SHOW_BOOKING, GET_SINGLE_MOVIE_SHOW, MOVIES_FAILURE, MOVIES_REQUEST, SINGLE_MOVIE, UPDATE_MOVIE } from './actiontype';
 
 
 // Action creator to fetch all movies
@@ -19,7 +19,9 @@ export const addMovieAction = (movieData) => async (dispatch) => {
     dispatch({ type: MOVIES_REQUEST });
   try {
     const response = await axios.post('http://127.0.0.1:8080/movies/add', movieData);
+    console.log(response.data)
     dispatch({ type: ADD_MOVIE, payload: response.data });
+    return response.data
   } catch (error) {
     dispatch({ type: MOVIES_FAILURE, payload: error.message });
   }
@@ -40,8 +42,9 @@ export const updateMovieAction = (movieId, movieData) => async (dispatch) => {
 export const deleteMovieAction = (movieId) => async (dispatch) => {
     dispatch({ type: MOVIES_REQUEST });
   try {
-    await axios.delete(`http://127.0.0.1:8080/movies/delete/${movieId}`);
+   await axios.delete(`http://127.0.0.1:8080/movies/delete/${movieId}`);
     dispatch({ type: DELETE_MOVIE, payload: movieId });
+    return;
   } catch (error) {
     dispatch({ type: MOVIES_FAILURE, payload: error.message });
   }
@@ -59,3 +62,65 @@ export const SingleMovieAction = (id)=>(dispatch)=>{
       dispatch({ type: MOVIES_FAILURE });
     })
   }
+
+
+// get booking of user;
+export const getMovieBookingsAction = (userId) => async (dispatch) => {
+  dispatch({ type: MOVIES_REQUEST });
+  try {
+    const response = await axios.get(`http://localhost:8080/movieBooking/user/${userId}`);
+    dispatch({ type: GET_MOVIE_SHOW_BOOKING, payload: response.data });
+  } catch (error) {
+    dispatch({ type: MOVIES_FAILURE, payload: error.message });
+  }
+};
+
+// get single movie_show
+export const SingleMovieShowAction = (id)=>(dispatch)=>{
+  dispatch({ type: MOVIES_REQUEST });
+  axios.get(`http://localhost:8080/movie_show/${id}`)
+  .then((res)=>{
+    // console.log(res.data)
+    dispatch({type:GET_SINGLE_MOVIE_SHOW,payload:res.data})
+  }).catch((err)=>{
+    console.log(err)
+    dispatch({ type: MOVIES_FAILURE });
+  })
+}
+
+
+export const addMovieShowBooking = (BookingObj) => async (dispatch) => {
+  dispatch({ type: MOVIES_REQUEST });
+try {
+  const response = await axios.post('http://127.0.0.1:8080/movieBooking/add', BookingObj);
+  console.log(response.data)
+  dispatch({ type: ADD_MOVIE_SHOW_BOOKING, payload: response.data });
+} catch (error) {
+  dispatch({ type: MOVIES_FAILURE, payload: error.message });
+}
+};
+
+// Ad a new movie show 
+export const addMovieShowAction = (movieShowData) => async (dispatch) => {
+  dispatch({ type: MOVIES_REQUEST });
+try {
+  const response = await axios.post('http://127.0.0.1:8080/movie_show/add', movieShowData);
+  console.log(response.data)
+  dispatch({ type: ADD_MOVIE_SHOW, payload: response.data });
+  return response.data
+} catch (error) {
+  dispatch({ type: MOVIES_FAILURE, payload: error.message });
+}
+};
+
+// delete show
+export const deleteMovieShowAction = (movieId) => async (dispatch) => {
+  dispatch({ type: MOVIES_REQUEST });
+try {
+ await axios.delete(`http://127.0.0.1:8080/movie_show/delete/${movieId}`);
+  dispatch({ type: DELETE_MOVIE_SHOW, payload: movieId });
+  return;
+} catch (error) {
+  dispatch({ type: MOVIES_FAILURE, payload: error.message });
+}
+};
