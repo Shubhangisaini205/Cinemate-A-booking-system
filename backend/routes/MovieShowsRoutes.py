@@ -4,7 +4,6 @@ from models.Movie_show_model import  Movie_Show
 from mongoengine.errors import DoesNotExist,MultipleObjectsReturned
 movie_show_bp = Blueprint('movie_show_bp', __name__)
 
-
 # Route to get all movie shows
 @movie_show_bp.route("/", methods=["GET"])
 def get_all_movie_shows():
@@ -19,10 +18,11 @@ def get_all_movie_shows():
                 "show_id": str(movie_show.id),
                 "show_name": movie_show.show_name,
                 "date": movie_show.date,
-                "start_times": movie_show.start_time,
-                "end_times": movie_show.end_time,
+                "audi": movie_show.audi,
+                "start_time": movie_show.start_time,  # Changed from "start_times" to "start_time"
                 "movie_id": str(movie_show.movie_id.id),
                 "total_seats": movie_show.total_seats,
+                "booked_seats":movie_show.booked_seats,
                 "price": movie_show.price
             }
             show_data_list.append(show_data)
@@ -32,24 +32,30 @@ def get_all_movie_shows():
         return jsonify({"message": "Error fetching movie shows", "error": str(e)}), 500
 
 
-
 # Route to get a single movie show
 @movie_show_bp.route("/<show_id>", methods=["GET"])
 def get_movie_show(show_id):
     try:
         # Find the movie show with the given show_id
         movie_show = Movie_Show.objects.get(id=show_id)
-        # Convert the movie show object to a dictionary representation
+        
+        # Get the movie details related to the movie show
+        movie = Movies.objects.get(id=movie_show.movie_id.id)
+        
+        # Convert the movie show and movie objects to dictionary representations
         show_data = {
             "show_id": str(movie_show.id),
             "show_name": movie_show.show_name,
             "date": movie_show.date,
-            "start_times": movie_show.start_time,
-            "end_times": movie_show.end_time,
-            "movie_id": str(movie_show.movie_id.id),
+            "audi": movie_show.audi,
+            "start_time": movie_show.start_time,
+            "movie_id": str(movie.id),
+            "movie_name": movie.movie_name,  # Add the movie name to the show data
             "total_seats": movie_show.total_seats,
+            "booked_seats":movie_show.booked_seats,
             "price": movie_show.price
         }
+        
         return jsonify(show_data), 200
     except DoesNotExist:
         return jsonify({"message": "Movie show not found"}), 404
@@ -64,14 +70,15 @@ def add_movie_show():
     data = request.get_json()
     show_name = data.get("show_name")
     date = data.get("date")
-    start_times = data.get("start_times")
-    end_times = data.get("end_times")
+    start_time = data.get("start_time")  # Changed from "start_times" to "start_time"
     movie_id = data.get("movie_id")
     total_seats = data.get("total_seats")
+    booked_seats = 0
     price = data.get("price")
-
+    audi= data.get("audi")
+    
     # Basic input validation
-    if not show_name or not date or not start_times or not end_times or not movie_id or not total_seats or not price:
+    if not show_name or not date or not start_time  or not movie_id or not total_seats or not price:
         return jsonify({"message": "Missing required fields"}), 400
 
     try:
@@ -86,21 +93,24 @@ def add_movie_show():
     new_show = Movie_Show(
         show_name=show_name,
         date=date,
-        start_time=start_times,
-        end_time=end_times,
+        start_time=start_time,  # Changed from "start_times" to "start_time"
         movie_id=movie,
         total_seats=total_seats,
-        price=price
+        booked_seats=booked_seats,
+        price=price,
+        audi=audi
     )
 
     try:
         new_show.save()
-         # Add the new show's ID to the movie's list of shows
+        # Add the new show's ID to the movie's list of shows
         movie.shows.append(new_show.id)
         movie.save()
         return jsonify({"message": "Movie show added successfully", "show_id": str(new_show.id)}), 201
     except Exception as e:
         return jsonify({"message": "Error adding the movie show", "error": str(e)}), 500
+
+
 
 
 # PATCH route to update a movie show
@@ -119,10 +129,8 @@ def update_movie_show(show_id):
         movie_show.show_name = data["show_name"]
     if "date" in data:
         movie_show.date = data["date"]
-    if "start_times" in data:
-        movie_show.start_time = data["start_times"]
-    if "end_times" in data:
-        movie_show.end_time = data["end_times"]
+    if "start_time" in data:
+        movie_show.start_time = data["start_time"]  # Changed from "start_times" to "start_time"
     if "total_seats" in data:
         movie_show.total_seats = data["total_seats"]
     if "price" in data:
@@ -133,7 +141,6 @@ def update_movie_show(show_id):
         return jsonify({"message": "Movie show updated successfully"}), 200
     except Exception as e:
         return jsonify({"message": "Error updating the movie show", "error": str(e)}), 500
-    
 
 
 # DELETE route to remove a movie show

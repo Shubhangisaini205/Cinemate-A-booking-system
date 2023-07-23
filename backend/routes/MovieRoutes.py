@@ -6,20 +6,11 @@ movie_bp = Blueprint('movie_bp', __name__)
 
 # Route to get all movies
 @movie_bp.route("/", methods=["GET"])
-
-    # try:
-    #     # movies = Movies.objects().exclude("shows").to_json()  # Exclude the 'shows' field to avoid large response
-    #     movies = Movies.objects().to_json()  
-
-    #     return movies, 200
-    # except Exception as e:
-    #     return jsonify({"message": "Error fetching movies", "error": str(e)}), 500
-
 def get_all_movies():
     try:
         # Retrieve all the movies from the database
         movies = Movies.objects()
-
+        # print(movies)
         # Convert the movies to a list of dictionaries
         movie_data_list = []
         for movie in movies:
@@ -27,17 +18,20 @@ def get_all_movies():
 
             # Fetch the detailed information of each show using the show_id
             for show in movie.shows:
+                # print(show)
                 show_data = {
                     "show_id": str(show.id),
                     "show_name":show.show_name,
                     "date": show.date,
                     "start_times": show.start_time,
-                    "end_times": show.end_time,
                     "total_seats": show.total_seats,
-                    "price": show.price
+                    "booked_seats":show.booked_seats,
+                    "price": show.price,
+                    "audi":show.audi
                 }
+                
                 shows_data.append(show_data)
-
+           
             # Convert the reviews array to a list of dictionaries
             reviews_data = []
             for review in movie.reviews:
@@ -70,7 +64,7 @@ def get_Single_Movie(_id):
     try:
         # Retrieve the movie with the specified ObjectId
         movie = Movies.objects.with_id(_id)
-
+        
         if movie:
             shows_data = []
 
@@ -81,12 +75,13 @@ def get_Single_Movie(_id):
                     "show_name": show.show_name,
                     "date": show.date,
                     "start_times": show.start_time,
-                    "end_times": show.end_time,
                     "total_seats": show.total_seats,
-                    "price": show.price
+                    "booked_seats":show.booked_seats,
+                    "price": show.price,
+                    "audi":show.audi
                 }
                 shows_data.append(show_data)
-
+            
             # Convert the reviews array to a list of dictionaries
             reviews_data = []
             for review in movie.reviews:
@@ -107,7 +102,7 @@ def get_Single_Movie(_id):
                 "shows": shows_data,
                 "reviews": reviews_data
             }
-
+            # print(movie_data)
             return jsonify(movie_data), 200
         else:
             return jsonify({"message": "Movie not found"}), 404

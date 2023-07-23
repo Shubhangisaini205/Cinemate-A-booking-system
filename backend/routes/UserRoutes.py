@@ -54,7 +54,8 @@ def register_user():
         email=email,
         password=hashed_password,
         role = "regular",
-        payment = 0
+        payment = 0,
+
     )
 
     new_user.save()
