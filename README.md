@@ -20,7 +20,8 @@ Cinemate is a Movie Booking System that allows users to browse and book tickets 
 ## Screenshots
 
 # Landing Page:
-![Screenshot (861)](https://github.com/Shubhangisaini205/Cinemate-A-booking-system/assets/115461618/02f038ff-3db9-40dc-97f2-5f76b15e0a50)
+![Screenshot (862)](https://github.com/Shubhangisaini205/Cinemate-A-booking-system/assets/115461618/b0afce1e-9e85-424d-812e-a1ee3fdb18b2)
+
 
 # Movie Listing:
 ![Screenshot (863)](https://github.com/Shubhangisaini205/Cinemate-A-booking-system/assets/115461618/252d8f83-5c52-4de4-8c68-dbdd5600cbfd)
