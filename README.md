@@ -17,7 +17,7 @@ Cinemate is a Movie Booking System that allows users to browse and book tickets 
 
 - **Role Management:** The system differentiates between regular users ,premium users and VIP users, with different privileges for each role.
 
-## ScreenShots
+## Screenshots
 
 # Landing Page:
 ![Screenshot (861)](https://github.com/Shubhangisaini205/Cinemate-A-booking-system/assets/115461618/02f038ff-3db9-40dc-97f2-5f76b15e0a50)
