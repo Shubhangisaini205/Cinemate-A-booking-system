@@ -30,7 +30,7 @@ export default class HomeSlider extends Component {
               margin={"auto"}
               width={"100%"}
               src={
-                "https://lmsin.net/cdn-cgi/image/w=1232,q=70,fit=cover/https://70415bb9924dca896de0-34a37044c62e41b40b39fcedad8af927.lmsin.net/LS-Fest/LS-new/LS-Uber-HP-Desktop-HeroBanner5-20July2023.gif"
+                "https://originserver-static1-uat.pvrcinemas.com/pvrcms/banners/Gift_card-Life_Style_4852.jpg"
               }
             />
           </Box>
@@ -41,7 +41,7 @@ export default class HomeSlider extends Component {
               margin={"auto"}
               width={"100%"}
               src={
-                "https://lmsin.net/cdn-cgi/image/w=1232,q=70,fit=cover/https://70415bb9924dca896de0-34a37044c62e41b40b39fcedad8af927.lmsin.net/LS-Fest/LS-new/LS-Uber-HP-Desktop-HeroBanner3-14July23.jpg"
+                "https://originserver-static1-uat.pvrcinemas.com/pvrcms/banners/Yes_Bank_9403.jpg"
               }
             />
           </Box>
@@ -52,7 +52,7 @@ export default class HomeSlider extends Component {
               margin={"auto"}
               width={"100%"}
               src={
-                "https://lmsin.net/cdn-cgi/image/w=1232,q=70,fit=cover/https://70415bb9924dca896de0-34a37044c62e41b40b39fcedad8af927.lmsin.net/LS-Fest/LS-new/LS-Uber-HP-Desktop-HeroBanner2-14July23.jpg"
+                "https://originserver-static1-uat.pvrcinemas.com/pvrcms/banner/Kotak-Welcome_back__8959.jpg"
               }
             />
           </Box>
@@ -63,7 +63,7 @@ export default class HomeSlider extends Component {
               margin={"auto"}
               width={"100%"}
               src={
-                "https://lmsin.net/cdn-cgi/image/w=1232,q=70,fit=cover/https://70415bb9924dca896de0-34a37044c62e41b40b39fcedad8af927.lmsin.net/LS-Fest/LS-new/LS-Uber-HP-Desktop-HeroBanner6-04JUNE23.jpg"
+                "https://originserver-static1-uat.pvrcinemas.com/pvrcms/banner/Filmy_Pass_3872.jpg"
               }
             />
           </Box>
@@ -74,7 +74,7 @@ export default class HomeSlider extends Component {
               margin={"auto"}
               width={"100%"}
               src={
-                "https://lmsin.net/cdn-cgi/image/w=1232,q=70,fit=cover/https://70415bb9924dca896de0-34a37044c62e41b40b39fcedad8af927.lmsin.net/LS-Fest/LS-new/LS-Uber-HP-Desktop-HeroBanner4-17July23.jpg"
+                "https://originserver-static1-uat.pvrcinemas.com/pvrcms/banners/Mall_Of_India_online_offer_9632.jpg"
               }
             />
           </Box>

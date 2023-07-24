@@ -4,7 +4,7 @@ import { AUTH_FAIL, AUTH_REQ, SIGNIN_SUCCESS, SIGNUP_SUCCESS, UPDATE_SUCCESS,GET
 
 export const SignupAction = (userObj) => (dispatch) => {
     dispatch({ type: AUTH_REQ });
-    axios.post("http://127.0.0.1:8080/users/register", userObj)
+    axios.post("https://cinemate-api.onrender.com/users/register", userObj)
       .then((res) => {
         if (res.status === 201) {
           
@@ -29,7 +29,7 @@ export const SignupAction = (userObj) => (dispatch) => {
 
   export const LoginAction = (userObj) => (dispatch) => {
     dispatch({ type: AUTH_REQ });
-    axios.post("http://127.0.0.1:8080/users/login", userObj)
+    axios.post("https://cinemate-api.onrender.com/users/login", userObj)
       .then((res) => {
         if (res.status === 200) {
           // console.log(res.data)
@@ -50,7 +50,7 @@ export const SignupAction = (userObj) => (dispatch) => {
 
 export const SingleUserAction = (id)=>(dispatch)=>{
   dispatch({ type: AUTH_REQ });
-  axios.get(`http://127.0.0.1:8080/users/${id}`)
+  axios.get(`https://cinemate-api.onrender.com/users/${id}`)
   .then((res)=>{
     // console.log(res.data)
     dispatch({type:GET_SINGLE_USER,payload:res.data})
@@ -63,7 +63,7 @@ export const SingleUserAction = (id)=>(dispatch)=>{
 
   export const UpdateAction = (id, payment) => (dispatch) => {
     dispatch({ type: AUTH_REQ });
-   return axios.patch(`http://127.0.0.1:8080/users/update/${id}`, { payment })
+   return axios.patch(`https://cinemate-api.onrender.com/users/update/${id}`, { payment })
       .then((res) => {
           console.log(res.data)
           dispatch({ type: UPDATE_SUCCESS})

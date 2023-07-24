@@ -6,7 +6,7 @@ import { ADD_MOVIE_SHOW, ADD_MOVIE_SHOW_BOOKING, DELETE_MOVIE, DELETE_MOVIE_SHOW
 export const getMoviesAction = () => async (dispatch) => {
   dispatch({ type: MOVIES_REQUEST });
   try {
-    const response = await axios.get('http://127.0.0.1:8080/movies');
+    const response = await axios.get('https://cinemate-api.onrender.com/movies');
      console.log(response.data)
     dispatch({ type: GET_MOVIES, payload: response.data });
   } catch (error) {
@@ -18,7 +18,7 @@ export const getMoviesAction = () => async (dispatch) => {
 export const addMovieAction = (movieData) => async (dispatch) => {
     dispatch({ type: MOVIES_REQUEST });
   try {
-    const response = await axios.post('http://127.0.0.1:8080/movies/add', movieData);
+    const response = await axios.post('https://cinemate-api.onrender.com/movies/add', movieData);
     console.log(response.data)
     dispatch({ type: ADD_MOVIE, payload: response.data });
     return response.data
@@ -31,7 +31,7 @@ export const addMovieAction = (movieData) => async (dispatch) => {
 export const updateMovieAction = (movieId, movieData) => async (dispatch) => {
   dispatch({ type: MOVIES_REQUEST });
   try {
-    await axios.patch(`http://127.0.0.1:8080/movies/update/${movieId}`, movieData);
+    await axios.patch(`https://cinemate-api.onrender.com/movies/update/${movieId}`, movieData);
     dispatch({ type: UPDATE_MOVIE });
   } catch (error) {
     dispatch({ type: MOVIES_FAILURE, payload: error.message });
@@ -42,7 +42,7 @@ export const updateMovieAction = (movieId, movieData) => async (dispatch) => {
 export const deleteMovieAction = (movieId) => async (dispatch) => {
     dispatch({ type: MOVIES_REQUEST });
   try {
-   await axios.delete(`http://127.0.0.1:8080/movies/delete/${movieId}`);
+   await axios.delete(`https://cinemate-api.onrender.com/movies/delete/${movieId}`);
     dispatch({ type: DELETE_MOVIE, payload: movieId });
     return;
   } catch (error) {
@@ -53,7 +53,7 @@ export const deleteMovieAction = (movieId) => async (dispatch) => {
 
 export const SingleMovieAction = (id)=>(dispatch)=>{
     dispatch({ type: MOVIES_REQUEST });
-    axios.get(`http://127.0.0.1:8080/movies/${id}`)
+    axios.get(`https://cinemate-api.onrender.com/movies/${id}`)
     .then((res)=>{
       // console.log(res.data)
       dispatch({type:SINGLE_MOVIE,payload:res.data})
@@ -68,7 +68,7 @@ export const SingleMovieAction = (id)=>(dispatch)=>{
 export const getMovieBookingsAction = (userId) => async (dispatch) => {
   dispatch({ type: MOVIES_REQUEST });
   try {
-    const response = await axios.get(`http://localhost:8080/movieBooking/user/${userId}`);
+    const response = await axios.get(`https://cinemate-api.onrender.com/movieBooking/user/${userId}`);
     dispatch({ type: GET_MOVIE_SHOW_BOOKING, payload: response.data });
   } catch (error) {
     dispatch({ type: MOVIES_FAILURE, payload: error.message });
@@ -78,7 +78,7 @@ export const getMovieBookingsAction = (userId) => async (dispatch) => {
 // get single movie_show
 export const SingleMovieShowAction = (id)=>(dispatch)=>{
   dispatch({ type: MOVIES_REQUEST });
-  axios.get(`http://localhost:8080/movie_show/${id}`)
+  axios.get(`https://cinemate-api.onrender.com/movie_show/${id}`)
   .then((res)=>{
     // console.log(res.data)
     dispatch({type:GET_SINGLE_MOVIE_SHOW,payload:res.data})
@@ -92,7 +92,7 @@ export const SingleMovieShowAction = (id)=>(dispatch)=>{
 export const addMovieShowBooking = (BookingObj) => async (dispatch) => {
   dispatch({ type: MOVIES_REQUEST });
 try {
-  const response = await axios.post('http://127.0.0.1:8080/movieBooking/add', BookingObj);
+  const response = await axios.post('https://cinemate-api.onrender.com/movieBooking/add', BookingObj);
   console.log(response.data)
   dispatch({ type: ADD_MOVIE_SHOW_BOOKING, payload: response.data });
 } catch (error) {
@@ -104,7 +104,7 @@ try {
 export const addMovieShowAction = (movieShowData) => async (dispatch) => {
   dispatch({ type: MOVIES_REQUEST });
 try {
-  const response = await axios.post('http://127.0.0.1:8080/movie_show/add', movieShowData);
+  const response = await axios.post('https://cinemate-api.onrender.com/movie_show/add', movieShowData);
   console.log(response.data)
   dispatch({ type: ADD_MOVIE_SHOW, payload: response.data });
   return response.data
@@ -117,7 +117,7 @@ try {
 export const deleteMovieShowAction = (movieId) => async (dispatch) => {
   dispatch({ type: MOVIES_REQUEST });
 try {
- await axios.delete(`http://127.0.0.1:8080/movie_show/delete/${movieId}`);
+ await axios.delete(`https://cinemate-api.onrender.com/movie_show/delete/${movieId}`);
   dispatch({ type: DELETE_MOVIE_SHOW, payload: movieId });
   return;
 } catch (error) {

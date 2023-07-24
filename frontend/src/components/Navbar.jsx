@@ -19,7 +19,8 @@ import {
   MenuItem,
   MenuDivider,
   Popover,
-  useToast
+  useToast,
+  DrawerHeader
 } from "@chakra-ui/react";
 import { navbar, colorShade4 } from "../constants/color";
 import { Link, useNavigate } from "react-router-dom";
@@ -124,9 +125,12 @@ const NavBar = () => {
         {/* Drawer */}
         <Drawer placement="right" onClose={onClose} isOpen={isOpen}>
           <DrawerOverlay />
-          <DrawerContent>
+          <DrawerContent bgGradient={navbar}>
             <DrawerCloseButton />
-            <DrawerBody>
+            <DrawerHeader borderBottomWidth='1px'>
+              <Image src={cinamateName} />
+            </DrawerHeader>
+            <DrawerBody bgGradient={navbar}>
               <Flex direction="column" gap={3}>
                 <Link to="/" onClick={onClose}>
                   <Text fontWeight="bold">Home</Text>
@@ -136,6 +140,54 @@ const NavBar = () => {
                     Movies
                   </Text>
                 </Link>
+                {token ?
+                  <Popover>
+                    <Menu>
+                      <MenuButton>
+                        <BsPerson fontSize={"1.7rem"} />
+                      </MenuButton>
+
+                      <MenuList>
+                        <MenuGroup title="Profile">
+                          <MenuItem color="pink.400">
+                            Hey,{token ? `${loggeduser.username}` : "User"}
+                          </MenuItem>
+                          <MenuItem><RoleModal id={loggeduser.userId} /></MenuItem>
+                          <MenuItem onClick={() => navigate("/userBookings")}>Your Bookings</MenuItem>
+                          {/* <MenuItem>My Address</MenuItem> */}
+                          <MenuItem>Reviews</MenuItem>
+                          <MenuItem
+                          // onClick={() => navigate("/adminLogin")}
+                          >
+                            Profile
+                          </MenuItem>
+                        </MenuGroup>
+                        <MenuItem
+                          _hover={{ bg: "#87234D" }}
+                          bgGradient={navbar}
+                          color={"white"}
+                          onClick={() => {
+                            // dispatch(logout);
+                            localStorage.clear()
+                            toast({
+                              title: "User Logout Successfully.",
+                              description: "Come Back Again Soon",
+                              status: "success",
+                              duration: 1000,
+                              isClosable: true,
+                              position: "top",
+                            });
+                            // navigate("/")
+                            window.location = "/"    //not working properly with navigate local store is not getting empty  perfectly 
+                          }}
+                        >
+                          Sign Out
+                        </MenuItem>
+
+                      </MenuList>
+                    </Menu>
+                  </Popover>
+                  : ""}
                 {token ? "" :
                   <Link to="/login" onClick={onClose}>
                     <Text fontWeight="bold">Login</Text>

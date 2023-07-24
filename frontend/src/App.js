@@ -6,6 +6,7 @@ import CreditCard from './components/CreditCard';
 import Footer from './components/Footer';
 import { Box } from '@chakra-ui/react';
 import { background } from './constants/color';
+import { CineBot } from './components/CineBot';
 
 function App() {
   return (
@@ -14,6 +15,17 @@ function App() {
       <NavBar/>
       <AllRoutes/>
       {/* <CreditCard/> */}
+      <Box
+        position="fixed"
+        left={0}
+        bottom={0}
+        // width="300px"
+        backgroundColor="transparent"
+        padding={4}
+        boxShadow="lg"
+      >
+        <CineBot/>
+      </Box>
       <Footer/>
     </Box>
   );

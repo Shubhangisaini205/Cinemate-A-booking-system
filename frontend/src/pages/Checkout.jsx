@@ -5,11 +5,12 @@ import { useParams } from 'react-router-dom';
 import { SingleMovieShowAction } from '../redux/MovieReducer/action';
 import { mainColor, navbar, orange } from '../constants/color';
 import BookingPayment from './BookingPayment';
+import { Loader } from '../utils/Loader';
 
 function Checkout() {
   const { showId } = useParams();
   const dispatch = useDispatch();
-  const { singleMovie_show } = useSelector((store) => store.MovieReducer);
+  const { singleMovie_show,isloading } = useSelector((store) => store.MovieReducer);
   const [seatCount, setSeatCount] = useState(1);
   const [toggle, setToggle] = useState(false)
 
@@ -46,13 +47,13 @@ function Checkout() {
   const grandTotal = totalPrice + gst;
 
   return (
-    <Box color={'white'}>
+    <Box color={'white'} mt={"55px"}>
       <Heading color={"white"} textAlign={"left"} mt={5} ml={"40px"}>Ticket Payment </Heading>
       <Divider mt={5} borderColor={"red"} mb={10} />
 
       {/* Add buttons to increase and decrease seat count */}
+      {isloading ? <Loader /> :
       <Box
-
         border="1px solid #bab8b4"
         padding={'20px'}
         width={{ base: '80%', sm: '80%', md: '40%', lg: '40%' }}
@@ -140,7 +141,7 @@ function Checkout() {
 
 
 
-      </Box>
+      </Box>}
     </Box>
   );
 }
