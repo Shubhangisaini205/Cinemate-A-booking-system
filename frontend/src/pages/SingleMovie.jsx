@@ -24,7 +24,7 @@ function SingleMovie() {
     const { movie_name, movie_desc, image_url, shows, length, language, reviews, movie_id } = singleMovie;
 
     useEffect(() => {
-        document.title = `Cinemate - ${movie_name} `;
+        document.title = `Cinemate - Movie shows `;
         // Clean up the title when the component unmounts
         return () => {
             document.title = 'Cinemate';
